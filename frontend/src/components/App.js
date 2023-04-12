@@ -5,8 +5,8 @@ const App = () => {
   const contacts = [
     {
       id: "karen",
-      name: "Karen Isgrigg",
-      handle: "karen_isgrigg",
+      name: "Karen Isgriggzy",
+      handle: "karen_isgriggzy",
       avatarURL: "http://localhost:5001/karen.jpg",
     },
     {
