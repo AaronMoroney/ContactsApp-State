@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 
 
-const ListContacts = ({ contacts, onDeleteContact }) => {
+
+const ListContacts = ({ contacts, onDeleteContact, onNavigate }) => {
     const [query, setQuery] = useState("");
     const updateQuery = (query) => {
         //.trim () = remove whitespace
@@ -13,7 +14,6 @@ const ListContacts = ({ contacts, onDeleteContact }) => {
         updateQuery("")
     }
 
-
     const showingContact = query === "" 
     ? contacts 
     : contacts.filter((c) => 
@@ -22,7 +22,7 @@ const ListContacts = ({ contacts, onDeleteContact }) => {
 
     return (
         <div className='list-contacts'>
-            <div>
+            <div className='list-contacts-top'>
                 <input 
                 className='search-contacts' 
                 type='text' 
@@ -30,6 +30,9 @@ const ListContacts = ({ contacts, onDeleteContact }) => {
                 value={query}
                 onChange={(event) => updateQuery(event.target.value)}
                 ></input>
+                <a href='#create' onClick={onNavigate} className="add-contact">
+                    Add contact
+                </a>
             </div>
             {
                 showingContact.length !== contacts.length && (

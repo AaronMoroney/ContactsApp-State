@@ -1,7 +1,9 @@
 import "../css/App.css";
 import {useState, useEffect} from 'react';
 import ListContacts from "./ListContacts";
+import CreateContact from "./CreateContact";
 import * as ContactsAPI from '../utils/ContactsAPI';
+
 
 const App = () => {
   const removeContact = (contact) => {
@@ -20,10 +22,22 @@ const App = () => {
     getContacts();
   }, [])
 
+  const [screen, setScreen] = useState('list')
+
   return (
-    <>
-      <ListContacts onDeleteContact = {removeContact} contacts={contacts}/>
-    </>
+    <div>
+      {
+        screen === "list" && (
+          <ListContacts onDeleteContact = {removeContact} contacts={contacts} 
+          onNavigate={() => { setScreen('create'); }}
+        />
+        )}
+      {
+        screen === 'create' && (
+          <CreateContact />
+        ) 
+      }
+    </div>
   )
 };
 
