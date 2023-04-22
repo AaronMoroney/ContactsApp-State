@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import ListContacts from "./ListContacts";
 import CreateContact from "./CreateContact";
 import * as ContactsAPI from '../utils/ContactsAPI';
+import {Routes, Route} from 'react-router-dom';
 
 
 const App = () => {
@@ -22,22 +23,17 @@ const App = () => {
     getContacts();
   }, [])
 
-  const [screen, setScreen] = useState('list')
-
   return (
-    <div>
-      {
-        screen === "list" && (
-          <ListContacts onDeleteContact = {removeContact} contacts={contacts} 
-          onNavigate={() => { setScreen('create'); }}
-        />
-        )}
-      {
-        screen === 'create' && (
-          <CreateContact />
-        ) 
-      }
-    </div>
+    <Routes>
+      <Route 
+      exact path='/' 
+      element={<ListContacts contacts={contacts} onDeleteContact={removeContact}/> }
+      />
+      <Route 
+      exact path='/create' 
+      element={<CreateContact/> }
+      />
+    </Routes>
   )
 };
 
