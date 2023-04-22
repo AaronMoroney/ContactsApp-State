@@ -3,14 +3,24 @@ import {useState, useEffect} from 'react';
 import ListContacts from "./ListContacts";
 import CreateContact from "./CreateContact";
 import * as ContactsAPI from '../utils/ContactsAPI';
-import {Routes, Route} from 'react-router-dom';
-
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 const App = () => {
+  let navigate = useNavigate();
   const removeContact = (contact) => {
     ContactsAPI.remove(contact)
     setContacts(contacts.filter(c => c.id !== contact.id))
   }
+
+  const createContact = (contact) => {
+    const create = async () => {
+      const res = await ContactsAPI.create(contact);
+      setContacts(contacts.concat(res));
+    };
+    create();
+    navigate('/');
+  };
+
   const [contacts, setContacts] = useState([]);
 
   //making calls to an external server is a sideEffect
@@ -31,7 +41,7 @@ const App = () => {
       />
       <Route 
       exact path='/create' 
-      element={<CreateContact/> }
+      element={<CreateContact onCreateContact={(contact)=> createContact(contact)}/> }
       />
     </Routes>
   )
